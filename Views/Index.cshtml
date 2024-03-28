@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Last_Try.Models.TimeEntry>
+
+<h2>Time Entries</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Approved</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model)
+        {
+            <tr>
+                <td>@entry.Date.ToShortDateString()</td>
+                <td>@entry.Hours</td>
+                <td>@(entry.Approved ? "Yes" : "No")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@entry.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@entry.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create">Add New Time Entry</a>
