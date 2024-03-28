@@ -13,7 +13,7 @@ namespace Last_Try.Models
         public ApplicationUser User { get; set; }
 
         public TimeSpan TimeIn { get; set; }
-        public TimeSpan Timeout { get; set; }
+        public TimeSpan TimeOut { get; set; }
         public DayOfWeek Day { get; set; }
 
 

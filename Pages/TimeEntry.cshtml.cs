@@ -12,7 +12,7 @@ namespace Last_Try.Pages
     public class TimeEntryModel : PageModel
     {
         [BindProperty]
-        public ApplicationUser.TimeEntry[] TimeEntries { get; set; } = new ApplicationUser.TimeEntry[7];
+        public TimeEntry[] TimeEntries { get; set; } = new TimeEntry[7];
         private readonly ApplicationDbContext _context;
 
         public TimeEntryModel(ApplicationDbContext context)
