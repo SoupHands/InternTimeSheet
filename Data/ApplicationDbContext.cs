@@ -11,7 +11,6 @@ namespace Last_Try.Data
         {
         }
         public DbSet<TimeEntry> TimeEntries { get; set; }
-        public DbSet<User> Users {  get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.;Database=Last_Try;Trusted_Connection=Yes;Integrated Security=True;TrustServerCertificate=True;");

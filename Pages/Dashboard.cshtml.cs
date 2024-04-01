@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Last_Try.Models;
 
-namespace Last_Try.Pages
+namespace Last_Try
 {
-    public class Index : PageModel
+    public class Dashboard : PageModel
     {
-        public void OnGet()
-        {
-        }
+     
     }
 }
