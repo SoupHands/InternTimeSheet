@@ -1,5 +1,5 @@
 ﻿@page
-@model TimeEntryModel
+@model Dashboard
 @{
     ViewData["Title"] = "Intern Dashboard";
 }
@@ -19,18 +19,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var entry in Model.TimeEntries)
+                    @foreach (var day in Model.DaysOfWeek)
                     {
+                        var entry = Model.TimeEntries.FirstOrDefault(e => e.Day == day);
                         <tr>
-                            <td>@entry.Date.ToShortDateString()</td>
-                            <td>@entry.Hours</td>
+                            <td>@day.ToString()</td>
+                            <td>@(entry?.TimeIn.ToString(@"hh\:mm") ?? "N/A")</td>
+                            <td>@(entry?.TimeOut.ToString(@"hh\:mm") ?? "N/A")</td>
                             <td>@(entry.Approved ? "Approved" : "Pending")</td>
                         </tr>
                     }
+                    @* @foreach (var entry in Model.TimeEntries)
+                    {
+                        <tr>
+                        
+                            <td>@entry?.Day</td>
+                            <td>@entry?.TimeIn</td>
+                            <td>@entry?.TimeOut</td>
+                            <td>@(entry.Approved ? "Approved" : "Pending")</td>
+                        
+                                                </tr>
+                    } *@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6">
+        @* <div class="col-md-6">
             <h3>Submit New Time Entry</h3>
             <form asp-page-handler="SubmitTimeEntry" method="post">
                 <div class="form-group">
@@ -38,11 +51,11 @@
                     <input type="date" class="form-control" id="date" name="date" required>
                 </div>
                 <div class="form-group">
-                    <label for="Time In">Time In</label>
-                    <input type="number" class="form-control" id="hours" name="hours" min="0" step="1" required>
+                    <label for="TimeIn">Time In</label>
+                    <input type="time" class="form-control" id="TimeIn" name="TimeIn" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-        </div>
+        </div> *@
     </div>
 </div>

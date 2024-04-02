@@ -28,6 +28,11 @@ public class Startup(IConfiguration configuration)
         services.AddControllersWithViews();
         services.AddRazorPages();
 
+        services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+        {
+            config.SignIn.RequireConfirmedEmail = false;
+        });
+
         services.AddControllersWithViews(options =>
         {
             var policy = new AuthorizationPolicyBuilder()
@@ -36,12 +41,7 @@ public class Startup(IConfiguration configuration)
                 .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
         });
-        services.AddTransient<IEmailSender, EmailSender>(i =>
-    new EmailSender(
-        Configuration["EmailSettings:Host"],
-        Configuration["EmailSettings:Port"],
-        Configuration["EmailSettings:Username"],
-        Configuration["EmailSettings:Password"]));
+      
 
         static async Task CreateUser(UserManager<IdentityUser> userManager, string username, string password)
         {
@@ -80,49 +80,6 @@ public class Startup(IConfiguration configuration)
         }
 
     }
-    public interface IEmailSender
-    {
-        Task SendEmailAsync(string email, string subject, string message);
-    }
 
-    public class EmailSender : IEmailSender
-    {
-        private readonly string _host;
-        private readonly int _port;
-        private readonly string _username;
-        private readonly string _password;
-
-        public EmailSender(string host, int port, string username, string password)
-        {
-            _host = host;
-            _port = port;
-            _username = username;
-            _password = password;
-        }
-
-        public EmailSender(string? v1, string? v2, string? v3, string? v4)
-        {
-            V1 = v1;
-            V2 = v2;
-            V3 = v3;
-            V4 = v4;
-        }
-
-        public string? V1 { get; }
-        public string? V2 { get; }
-        public string? V3 { get; }
-        public string? V4 { get; }
-
-        public async Task SendEmailAsync(string email, string subject, string message)
-        {
-            var client = new SmtpClient(_host, _port)
-            {
-                Credentials = new NetworkCredential(_username, _password),
-                EnableSsl = true,
-            };
-            await client.SendMailAsync(
-                new MailMessage(_username, email, subject, message) { IsBodyHtml = true });
-        }
-    }
 
 }

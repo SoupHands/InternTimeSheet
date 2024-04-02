@@ -9,8 +9,11 @@ using Last_Try;
 namespace Last_Try.Pages
 
 {
+
     public class TimeEntryModel : PageModel
     {
+        public List<DateTime> WeekDates { get; set; }
+ 
         [BindProperty]
         public TimeEntry[] TimeEntries { get; set; } = new TimeEntry[7];
         private readonly ApplicationDbContext _context;
@@ -21,16 +24,17 @@ namespace Last_Try.Pages
         }
         public void OnGet()
         {
-            TimeEntries = new TimeEntry[7];
+            WeekDates = new List<DateTime>();
+            DateTime today = DateTime.Today;
+            int dayOfWeek = (int)today.DayOfWeek;
+            DateTime startOfWeek = today.AddDays(-dayOfWeek);
+
             for (int i = 0; i < 7; i++)
             {
-                TimeEntries[i] = new TimeEntry
-                {
-                    Day = (DayOfWeek)i,
-                    TimeIn = TimeSpan.Zero,
-                    TimeOut = TimeSpan.Zero
-                };
+                WeekDates.Add(startOfWeek.AddDays(i));
             }
+            TimeEntries = new TimeEntry[7];
+            
         }
 
         public async Task<IActionResult> OnPostAsync()
