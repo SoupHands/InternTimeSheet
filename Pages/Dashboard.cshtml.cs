@@ -3,12 +3,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Last_Try.Models;
 using Last_Try.Pages;
 using System;
+using Last_Try.Data;
+using EllipticCurve;
 
 
 namespace Last_Try
 {
-    public class Dashboard : PageModel
+    public class DashboardModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
+
+        public DashboardModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+       
         public List<DayOfWeek> DaysOfWeek { get; set; }
 
         public List<TimeEntry> TimeEntries { get; set; }
@@ -24,8 +34,9 @@ namespace Last_Try
             {
                 DaysOfWeek.Add(startOfWeek.AddDays(i).DayOfWeek);
             }
-            TimeEntries = new List<TimeEntry>();
+
             
+               TimeEntries = new List<TimeEntry>();
                foreach (var day in DaysOfWeek)
             {
                 TimeEntries.Add(new TimeEntry
@@ -41,5 +52,8 @@ namespace Last_Try
                 ViewData["Title"] = "Your Time Entries";
         }
 
+
     }
+
+
 }

@@ -1,4 +1,5 @@
 ﻿using Last_Try.Models;
+using Last_Try.Pages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

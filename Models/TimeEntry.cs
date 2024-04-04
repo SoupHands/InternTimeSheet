@@ -16,6 +16,7 @@ namespace Last_Try.Models
         public TimeSpan TimeOut { get; set; }
         public DayOfWeek Day { get; set; }
 
+        public TimeSpan TimeWorked => TimeOut - TimeIn;
 
         public IList<TimeEntry> TimeEntries { get; set; }
 

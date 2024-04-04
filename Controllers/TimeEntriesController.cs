@@ -4,6 +4,7 @@ using Last_Try.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Last_Try.Pages;
 
 
 namespace Last_Try.Controllers
@@ -11,6 +12,27 @@ namespace Last_Try.Controllers
     public class TimeEntriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+
+        [HttpPost]
+        public IActionResult Submit(TimeEntryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var entry in model.TimeEntries)
+                {
+                    var TimeWorked = entry.TimeOut - entry.TimeIn;
+                }
+            return RedirectToAction("Dashboard");
+            }
+            return View("TimeEntry",model);
+        }
+        //public IActionResult Dashboard()
+        //{
+        //    var timeWorkedData = GetTimeWorkedData();
+
+        //    return View(timeWorkedData);
+        //}
+
 
         public TimeEntriesController(ApplicationDbContext context)
         {  _context = context; }
@@ -106,5 +128,15 @@ namespace Last_Try.Controllers
             return _context.TimeEntries.Any(e => e.Id == id);
         }
 
+        //private List<TimeEntry> GetTimeEntriesForWeek(DateTime startOfWeek)
+        //{
+        //    DateTime endOfWeek = startOfWeek.AddDays(6);
+
+        //    var timeEntries = context.TimeEntries
+        //        .Where(entry => entry.Date >= startOfWeek && entry.Date <= endOfWeek)
+        //        .ToList();
+
+        //    return timeEntries;
+        //}
     }
 }
