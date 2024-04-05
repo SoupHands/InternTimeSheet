@@ -5,6 +5,7 @@ using Last_Try.Pages;
 using System;
 using Last_Try.Data;
 using EllipticCurve;
+using Last_Try.Pages;
 
 
 namespace Last_Try
@@ -39,11 +40,16 @@ namespace Last_Try
                TimeEntries = new List<TimeEntry>();
                foreach (var day in DaysOfWeek)
             {
-                TimeEntries.Add(new TimeEntry
+                foreach (var timeEntry in TimeEntries)
+                {
+                    TimeSpan TimeIn = timeEntry.TimeIn;
+                    TimeSpan TimeOut = timeEntry.TimeOut;
+                }
+                    TimeEntries.Add(new TimeEntry
                 {
                     Day = day,
-                    TimeIn = TimeSpan.FromHours(8.25),
-                    TimeOut = TimeSpan.FromHours(12), 
+                    //TimeIn = TimeSpan.FromHours(8.25), test code
+                    //TimeOut = TimeSpan.FromHours(12), 
                     Approved = true
                 });
             }
