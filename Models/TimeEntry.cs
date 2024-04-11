@@ -10,7 +10,7 @@ namespace Last_Try.Models
         public int Hours { get; set; }
         public bool Approved { get; set; }
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        //public ApplicationUser User { get; set; }
 
         public TimeSpan TimeIn { get; set; }
         public TimeSpan TimeOut { get; set; }

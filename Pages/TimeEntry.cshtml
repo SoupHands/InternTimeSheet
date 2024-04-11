@@ -18,8 +18,8 @@
                     <label for="timeEntries[@i].Date">@date.ToString("d")</label>
                     <input type="hidden" asp-for="TimeEntries[@i].Date" value="@date" />
                     <div class="input-group">
-                        <input asp-for="TimeEntries[@i].TimeIn" type="time" class="form-control" id="timeEntries[@i].TimeIn" required>
-                        <input asp-for="TimeEntries[@i].TimeOut" type="time" class="form-control" id="timeEntries[@i].TimeOut" required>
+                        <input asp-for="TimeEntries[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn" required>
+                        <input asp-for="TimeEntries[@i].TimeOut" type="time" class="form-control" id="TimeEntries[@i].TimeOut" required>
                     </div>
                     <div class="invalid-feedback">
                         Please enter a time in and time out.

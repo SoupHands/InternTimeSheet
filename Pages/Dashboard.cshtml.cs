@@ -29,7 +29,7 @@ namespace Last_Try
             DaysOfWeek = new List<DayOfWeek>();
             DateTime today = DateTime.Today;
             int dayOfWeek = (int)today.DayOfWeek;
-            DateTime startOfWeek = today.AddDays(-dayOfWeek);
+            DateTime startOfWeek = today.AddDays(-dayOfWeek + 1);
 
             for (int i = 0; i < 7; i++)
             {
@@ -50,7 +50,7 @@ namespace Last_Try
                     Day = day,
                     //TimeIn = TimeSpan.FromHours(8.25), test code
                     //TimeOut = TimeSpan.FromHours(12), 
-                    Approved = true
+                    Approved = false    
                 });
             }
         

@@ -10,18 +10,24 @@ namespace Last_Try.Pages
 
 {
 
-    public class TimeEntryModel : PageModel
+   
+    public class TimeEntryModel(ApplicationDbContext context) : PageModel
     {
+     
         public List<DateTime> WeekDates { get; set; }
  
-        [BindProperty]
-        public TimeEntry[] TimeEntries { get; set; } = new TimeEntry[7];
-        private readonly ApplicationDbContext _context;
+       
+       public TimeEntryModel TimeEntry { get; set; }
 
-        public TimeEntryModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+
+        [BindProperty]
+
+        public TimeEntry[] TimeEntries { get; set; } = new TimeEntry[7];
+        public TimeSpan TimeOut { get; private set; }
+        public TimeSpan TimeIn { get; private set; }
+
+        private readonly ApplicationDbContext _context = context;
+
         public void OnGet()
         {
             WeekDates = new List<DateTime>();
@@ -37,17 +43,31 @@ namespace Last_Try.Pages
             
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(DateTime Day , TimeEntry Timein, TimeEntry Timeout )
         {
+            //TimeSpan TimeIn = TimeEntry.TimeIn;
+            //TimeSpan TimeOut = TimeEntry.TimeOut;
+            var TimeEntries = new TimeEntry()
+            {
+                Day = DateTime.Today.DayOfWeek,
+                TimeIn = TimeIn,
+                TimeOut = TimeOut
+            };
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            foreach (var timeEntry in TimeEntries)
+             if (TimeEntry != null)
             {
-                _context.TimeEntries.Add(timeEntry);
+                var WeekDates = TimeEntry.WeekDates;
+                
             }
+           
+                _context.TimeEntries.Add(TimeEntries);
+                _context.SaveChanges();
+            
 
             await _context.SaveChangesAsync();
 
