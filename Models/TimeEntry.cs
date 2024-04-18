@@ -18,7 +18,7 @@ namespace Last_Try.Models
 
         public TimeSpan TimeWorked => TimeOut - TimeIn;
 
-        public IList<TimeEntry> TimeEntries { get; set; }
+        //public IList<TimeEntry> TimeEntries { get; set; }
 
         public TimeEntry()
         {

@@ -1,42 +1,31 @@
 ﻿@page
+@using Last_Try.Data
+@using Last_Try.Models
+@using Last_Try.Controllers
 @using Microsoft.EntityFrameworkCore.Storage
 @model TimeEntryModel;
 
 @{
     ViewData["Title"] = "Time Entry";
-    var TimeIn = "";
-    var TimeOut = "";
-
-    if (Request.Method == "post")
-    {
-        TimeIn = Request.Form["timein"];
-        TimeOut = Request.Form["timeout"];
-
-        var db = Database.Open(Request.Method);
-        var insertcommand = "insert into timeentries (timein, time_out) values(@0, @1)";
-        db.execute(insertcommand, TimeIn, TimeOut);
-        Response.Redirect("~/dashboard");
-    }
-
 }
 
-<div class="container">
+
+ <div class="container">
     <h2 class="my-4">Time Entry</h2>
 
-    <form method="post" class="needs-validation" novalidate>
+    <form method="post" class="needs-validation" id="TimeEntry" novalidate>
         <div class="form-row">
 
-            @* @if (Model.WeekDates != null)
-            { *@
+           
             @for (int i = 0; i < Model.WeekDates.Count; i++)
             {
                 var date = Model.WeekDates[i];
                 <div class="col-md-6 mb-3">
                     <label for="timeEntries[@i].Date">@date.ToString("d")</label>
-                    <input type="hidden" asp-for="TimeEntries[@i].Date" value="@date; @Request.Form["date"]" />
+                    <input type="hidden" asp-for="TimeEntries[@i].Date" name="times[@i].Date" value="@date" />
                     <div class="input-group">
-                        <input asp-for="TimeEntries[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn" value="@Request.Form["TimeIn"]" required>
-                        <input asp-for="TimeEntries[@i].TimeOut" type="time" class="form-control" id="TimeEntries[@i].TimeOut" value="@Request.Form["TimeOut"]" required>
+                        <input asp-for="TimeEntries[@i].TimeIn" name="times[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn">
+                        <input asp-for="TimeEntries[@i].TimeOut" name="times[@i].TimeOut" type="time" class="form-control" id="TimeEntries[@i].TimeOut">
                     </div>
                     <div class="invalid-feedback">
                         Please enter a time in and time out.
@@ -47,5 +36,7 @@
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
+ 
 </div>
+
 

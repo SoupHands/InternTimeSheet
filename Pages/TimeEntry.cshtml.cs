@@ -44,7 +44,7 @@ namespace Last_Try.Pages
             
         }
 
-        public async Task<IActionResult> OnPostAsync(DateTime Day , TimeEntry Timein, TimeEntry Timeout )
+        public async Task<IActionResult> OnPostAsync(List<TimeEntry> times )
         {
             //TimeSpan TimeIn = TimeEntry.TimeIn;
             //TimeSpan TimeOut = TimeEntry.TimeOut;
