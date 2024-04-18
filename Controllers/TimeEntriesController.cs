@@ -13,6 +13,20 @@ namespace Last_Try.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        public List<DateTime> WeekDates()
+        {
+            var dates = new List<DateTime>();
+            DateTime today = DateTime.Today;
+            int dayOfWeek = (int)today.DayOfWeek;
+            DateTime startOfWeek = today.AddDays(-dayOfWeek);
+
+            for (int i = 0; i < 7; i++)
+            {
+                dates.Add(startOfWeek.AddDays(i));
+            }
+
+            return dates;
+        }
         [HttpPost]
         public IActionResult Submit(TimeEntryModel model)
         {
@@ -128,15 +142,6 @@ namespace Last_Try.Controllers
             return _context.TimeEntries.Any(e => e.Id == id);
         }
 
-        //private List<TimeEntry> GetTimeEntriesForWeek(DateTime startOfWeek)
-        //{
-        //    DateTime endOfWeek = startOfWeek.AddDays(6);
-
-        //    var timeEntries = context.TimeEntries
-        //        .Where(entry => entry.Date >= startOfWeek && entry.Date <= endOfWeek)
-        //        .ToList();
-
-        //    return timeEntries;
-        //}
+     
+        }
     }
-}

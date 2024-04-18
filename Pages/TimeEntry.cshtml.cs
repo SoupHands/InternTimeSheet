@@ -5,6 +5,7 @@ using System;
 using Last_Try.Data;
 using Last_Try.Controllers;
 using Last_Try;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Last_Try.Pages
 
@@ -14,7 +15,7 @@ namespace Last_Try.Pages
     public class TimeEntryModel(ApplicationDbContext context) : PageModel
     {
      
-        public List<DateTime> WeekDates { get; set; }
+        public List<DateTime> WeekDates { get; set; } = new List<DateTime>();
  
        
        public TimeEntryModel TimeEntry { get; set; }
@@ -52,6 +53,7 @@ namespace Last_Try.Pages
                 Day = DateTime.Today.DayOfWeek,
                 TimeIn = TimeIn,
                 TimeOut = TimeOut
+            
             };
 
             if (!ModelState.IsValid)

@@ -1,7 +1,23 @@
 ﻿@page
-@model TimeEntryModel
+@using Microsoft.EntityFrameworkCore.Storage
+@model TimeEntryModel;
+
 @{
     ViewData["Title"] = "Time Entry";
+    var TimeIn = "";
+    var TimeOut = "";
+
+    if (Request.Method == "post")
+    {
+        TimeIn = Request.Form["timein"];
+        TimeOut = Request.Form["timeout"];
+
+        var db = Database.Open(Request.Method);
+        var insertcommand = "insert into timeentries (timein, time_out) values(@0, @1)";
+        db.execute(insertcommand, TimeIn, TimeOut);
+        Response.Redirect("~/dashboard");
+    }
+
 }
 
 <div class="container">
@@ -10,22 +26,24 @@
     <form method="post" class="needs-validation" novalidate>
         <div class="form-row">
 
-
+            @* @if (Model.WeekDates != null)
+            { *@
             @for (int i = 0; i < Model.WeekDates.Count; i++)
             {
                 var date = Model.WeekDates[i];
                 <div class="col-md-6 mb-3">
                     <label for="timeEntries[@i].Date">@date.ToString("d")</label>
-                    <input type="hidden" asp-for="TimeEntries[@i].Date" value="@date" />
+                    <input type="hidden" asp-for="TimeEntries[@i].Date" value="@date; @Request.Form["date"]" />
                     <div class="input-group">
-                        <input asp-for="TimeEntries[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn" required>
-                        <input asp-for="TimeEntries[@i].TimeOut" type="time" class="form-control" id="TimeEntries[@i].TimeOut" required>
+                        <input asp-for="TimeEntries[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn" value="@Request.Form["TimeIn"]" required>
+                        <input asp-for="TimeEntries[@i].TimeOut" type="time" class="form-control" id="TimeEntries[@i].TimeOut" value="@Request.Form["TimeOut"]" required>
                     </div>
                     <div class="invalid-feedback">
                         Please enter a time in and time out.
                     </div>
                 </div>
             }
+            @* } *@
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>

@@ -5,7 +5,6 @@ using Last_Try.Pages;
 using System;
 using Last_Try.Data;
 using EllipticCurve;
-using Last_Try.Pages;
 
 
 namespace Last_Try

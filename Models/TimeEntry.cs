@@ -20,6 +20,11 @@ namespace Last_Try.Models
 
         public IList<TimeEntry> TimeEntries { get; set; }
 
-    }
+        public TimeEntry()
+        {
+            WeekDates = new List<DateTime>();
+        }
+        public List<DateTime> WeekDates { get; set; }
+}
 
 }
