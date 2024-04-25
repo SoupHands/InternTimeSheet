@@ -6,10 +6,12 @@ using Last_Try.Data;
 using Last_Try.Controllers;
 using Last_Try;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace Last_Try.Pages
 
 {
+    
 
    
     public class TimeEntryModel(ApplicationDbContext context) : PageModel
@@ -28,6 +30,10 @@ namespace Last_Try.Pages
         public TimeSpan TimeIn { get; private set; }
 
         private readonly ApplicationDbContext _context = context;
+        public List<TimeEntry> GetTimeEntries()
+        {
+            return _context.TimeEntries.ToList();
+        }
 
         public void OnGet()
         {
@@ -48,11 +54,11 @@ namespace Last_Try.Pages
         {
             //TimeSpan TimeIn = TimeEntry.TimeIn;
             //TimeSpan TimeOut = TimeEntry.TimeOut;
-            var TimeEntries = new TimeEntry()
+            var TimeEntries = new TimeEntry
             {
                 Day = DateTime.Today.DayOfWeek,
                 TimeIn = TimeIn,
-                TimeOut = TimeOut
+                Time_Out = TimeOut
             
             };
 
@@ -63,13 +69,22 @@ namespace Last_Try.Pages
 
              if (TimeEntry != null)
             {
-                var WeekDates = TimeEntry.WeekDates;
+                var Date = TimeEntry.WeekDates;
                 
             }
+
+            List<TimeEntry> timeEntries = GetTimeEntries();
+
+            foreach (var time in times)
+            {
+                _context.TimeEntries.Add(time);
+            }
+
+
+    
+
            
-                _context.TimeEntries.Add(TimeEntries);
-                _context.SaveChanges();
-            
+
 
             await _context.SaveChangesAsync();
 

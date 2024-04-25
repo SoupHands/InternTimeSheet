@@ -34,7 +34,7 @@ namespace Last_Try.Controllers
             {
                 foreach (var entry in model.TimeEntries)
                 {
-                    var TimeWorked = entry.TimeOut - entry.TimeIn;
+                    var TimeWorked = entry.Time_Out - entry.TimeIn;
                 }
             return RedirectToAction("Dashboard");
             }

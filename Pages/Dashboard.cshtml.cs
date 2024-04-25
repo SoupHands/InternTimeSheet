@@ -41,8 +41,8 @@ namespace Last_Try
             {
                 foreach (var timeEntry in TimeEntries)
                 {
-                    TimeSpan TimeIn = timeEntry.TimeIn;
-                    TimeSpan TimeOut = timeEntry.TimeOut;
+                    TimeSpan TimeIn = (TimeSpan)timeEntry.TimeIn;
+                    TimeSpan TimeOut = (TimeSpan)timeEntry.Time_Out;
                 }
                     TimeEntries.Add(new TimeEntry
                 {

@@ -2,6 +2,8 @@
 using Last_Try.Pages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
+using Last_Try;
 
 namespace Last_Try.Data
 {
@@ -12,10 +14,19 @@ namespace Last_Try.Data
         {
         }
         public DbSet<TimeEntry> TimeEntries { get; set; }
+
+       
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.;Database=Last_Try;Trusted_Connection=Yes;Integrated Security=True;TrustServerCertificate=True;");
+            
         }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<TimeEntry>().ToTable("TimeEntries");
+        //}
     }
 
 }
