@@ -5,15 +5,15 @@ namespace Last_Try.Models
     public class TimeEntry
     {
 
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public int Hours { get; set; }
+        public int? Id { get; set; }
+       // public DateTime? Date { get; set; }
+        public int? Hours { get; set; }
         public bool Approved { get; set; }
-        public string? UserId { get; set; }
+        public string UserId { get; set; }
 
         public TimeSpan? TimeIn { get; set; } 
         public TimeSpan? Time_Out { get; set; }
-        public DayOfWeek Day { get; set; }
+        public DayOfWeek? Day { get; set; }
 
         public TimeSpan? TimeWorked
         { get
@@ -30,11 +30,11 @@ namespace Last_Try.Models
 
         //public IList<TimeEntry> TimeEntries { get; set; }
 
-        public TimeEntry()
-        {
-            WeekDates = new List<DateTime>();
-        }
-        public List<DateTime> WeekDates { get; set; }
+        //public TimeEntry()
+        //{
+        //    Date = new List<DateTime>();
+        //}
+        public List<DateTime>? Date { get; set; }
 }
 
 }

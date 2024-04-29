@@ -7,9 +7,13 @@ using Last_Try;
 
 namespace Last_Try.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class TimeDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public TimeDbContext()
+        {
+        }
+
+        public TimeDbContext(DbContextOptions<TimeDbContext> options)
             : base(options)
         {
         }

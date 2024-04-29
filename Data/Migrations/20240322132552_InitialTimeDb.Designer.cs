@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Last_Try.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(TimeDbContext))]
     [Migration("20240322132552_InitialTimeDb")]
     partial class InitialTimeDb
     {

@@ -22,14 +22,14 @@
                     @foreach (var day in Model.DaysOfWeek)
                     {
                         var entry = Model.TimeEntries.FirstOrDefault(e => e.Day == day);
-                        if (day != null)
+                        if (day != null && entry.TimeIn.HasValue && entry.Time_Out.HasValue)
                         {
-                        <tr>
-                            <td>@day.ToString()</td>
-                            <td>@(entry?.TimeIn.Value.ToString(@"hh\:mm") ?? "N/A")</td>
-                            <td>@(entry?.Time_Out.Value.ToString(@"hh\:mm") ?? "N/A")</td>
-                            <td>@(entry.Approved ? "Approved" : "Pending")</td>
-                        </tr>
+                            <tr>
+                                <td>@day.ToString()</td>
+                            <td>@(entry.TimeIn.Value.ToString(@"hh\:mm") ?? "N/A")</td>
+                            <td>@(entry.Time_Out.Value.ToString(@"hh\:mm") ?? "N/A")</td>
+                               @* <td>@(entry.Approved; "Approved": "Pending")</td>*@
+                            </tr>
                         }
                     }
                 </tbody>

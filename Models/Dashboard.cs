@@ -13,9 +13,9 @@ namespace Last_Try.Models
     [Authorize(Roles = "Intern")]
     public class DashboardModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly TimeDbContext _context;
 
-        public DashboardModel(ApplicationDbContext context)
+        public DashboardModel(TimeDbContext context)
         {
             _context = context;
         }
@@ -32,7 +32,7 @@ namespace Last_Try.Models
         //        .ToListAsync();
         //}
 
-        public async Task<IActionResult> OnPostSubmitTimeEntryAsync(DateTime date, int hours)
+        public async Task<IActionResult> OnPostSubmitTimeEntryAsync(List<DateTime> date, int hours)
         {
             var timeEntry = new TimeEntry
             {

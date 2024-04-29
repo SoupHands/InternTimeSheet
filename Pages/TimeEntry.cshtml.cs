@@ -14,10 +14,11 @@ namespace Last_Try.Pages
     
 
    
-    public class TimeEntryModel(ApplicationDbContext context) : PageModel
+    public class TimeEntryModel(TimeDbContext context) : PageModel
     {
-     
-        public List<DateTime> WeekDates { get; set; } = new List<DateTime>();
+
+        public string UserId { get; set; } = "Tony";
+        public List<DateTime> Date { get; set; } = new List<DateTime>();
  
        
        public TimeEntryModel TimeEntry { get; set; }
@@ -29,7 +30,7 @@ namespace Last_Try.Pages
         public TimeSpan TimeOut { get; private set; }
         public TimeSpan TimeIn { get; private set; }
 
-        private readonly ApplicationDbContext _context = context;
+        private readonly TimeDbContext _context = context;
         public List<TimeEntry> GetTimeEntries()
         {
             return _context.TimeEntries.ToList();
@@ -37,14 +38,14 @@ namespace Last_Try.Pages
 
         public void OnGet()
         {
-            WeekDates = new List<DateTime>();
+            Date = new List<DateTime>();
             DateTime today = DateTime.Today;
             int dayOfWeek = (int)today.DayOfWeek;
             DateTime startOfWeek = today.AddDays(-dayOfWeek);
 
             for (int i = 0; i < 7; i++)
             {
-                WeekDates.Add(startOfWeek.AddDays(i));
+                Date.Add(startOfWeek.AddDays(i));
             }
             TimeEntries = new TimeEntry[7];
             
@@ -58,7 +59,8 @@ namespace Last_Try.Pages
             {
                 Day = DateTime.Today.DayOfWeek,
                 TimeIn = TimeIn,
-                Time_Out = TimeOut
+                Time_Out = TimeOut,
+                
             
             };
 
@@ -67,9 +69,15 @@ namespace Last_Try.Pages
                 return Page();
             }
 
-             if (TimeEntry != null)
+            
+            
+                
+              _context.TimeEntries.AddRange(TimeEntries);
+                
+
+                if (TimeEntry != null)
             {
-                var Date = TimeEntry.WeekDates;
+                var Date = TimeEntry.Date;
                 
             }
 

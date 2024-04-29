@@ -17,15 +17,15 @@
         <div class="form-row">
 
            
-            @for (int i = 0; i < Model.WeekDates.Count; i++)
+            @for (int i = 0; i < Model.Date.Count; i++)
             {
-                var date = Model.WeekDates[i];
+                var date = Model.Date[i];
                 <div class="col-md-6 mb-3">
                     <label for="timeEntries[@i].Date">@date.ToString("d")</label>
                     <input type="hidden" asp-for="TimeEntries[@i].Date" name="times[@i].Date" value="@date" />
                     <div class="input-group">
-                        <input asp-for="TimeEntries[@i].TimeIn" name="times[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn">
-                        <input asp-for="TimeEntries[@i].TimeOut" name="times[@i].TimeOut" type="time" class="form-control" id="TimeEntries[@i].TimeOut">
+                        <input asp-for="TimeEntries[@i].TimeIn" name="TimeEntries[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn">
+                        <input asp-for="TimeEntries[@i].TimeOut" name="TimeEntries[@i].Time_Out" type="time" class="form-control" id="TimeEntries[@i].Time_Out">
                     </div>
                     <div class="invalid-feedback">
                         Please enter a time in and time out.

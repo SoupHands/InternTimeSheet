@@ -11,7 +11,7 @@ namespace Last_Try.Controllers
 {
     public class TimeEntriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly TimeDbContext _context;
 
         public List<DateTime> WeekDates()
         {
@@ -48,7 +48,7 @@ namespace Last_Try.Controllers
         //}
 
 
-        public TimeEntriesController(ApplicationDbContext context)
+        public TimeEntriesController(TimeDbContext context)
         {  _context = context; }
         public IActionResult Index()
         {
@@ -105,7 +105,7 @@ namespace Last_Try.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TimeEntryExists(timeEntry.Id))
+                    if (!TimeEntryExists((int)timeEntry.Id))
                     {
                         return NotFound();
                     }
