@@ -32,7 +32,7 @@ namespace Last_Try.Models
         //        .ToListAsync();
         //}
 
-        public async Task<IActionResult> OnPostSubmitTimeEntryAsync(List<DateTime> date, int hours)
+        public async Task<IActionResult> OnPostSubmitTimeEntryAsync(List<DateTime> date, TimeSpan hours)
         {
             var timeEntry = new TimeEntry
             {

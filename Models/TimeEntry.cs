@@ -7,9 +7,9 @@ namespace Last_Try.Models
 
         public int? Id { get; set; }
        // public DateTime? Date { get; set; }
-        public int? Hours { get; set; }
+        public TimeSpan? Hours { get; set; }
         public bool Approved { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         public TimeSpan? TimeIn { get; set; } 
         public TimeSpan? Time_Out { get; set; }

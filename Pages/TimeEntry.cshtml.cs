@@ -27,8 +27,8 @@ namespace Last_Try.Pages
         [BindProperty]
 
         public TimeEntry[] TimeEntries { get; set; } = new TimeEntry[7];
-        public TimeSpan TimeOut { get; private set; }
-        public TimeSpan TimeIn { get; private set; }
+        public TimeSpan TimeOut { get; set; }
+        public TimeSpan TimeIn { get; set; }
 
         private readonly TimeDbContext _context = context;
         public List<TimeEntry> GetTimeEntries()
@@ -40,8 +40,8 @@ namespace Last_Try.Pages
         {
             Date = new List<DateTime>();
             DateTime today = DateTime.Today;
-            int dayOfWeek = (int)today.DayOfWeek;
-            DateTime startOfWeek = today.AddDays(-dayOfWeek);
+            DateTime dayOfWeek = today;
+            DateTime startOfWeek = dayOfWeek.Date;
 
             for (int i = 0; i < 7; i++)
             {
@@ -53,14 +53,11 @@ namespace Last_Try.Pages
 
         public async Task<IActionResult> OnPostAsync(List<TimeEntry> times )
         {
-            //TimeSpan TimeIn = TimeEntry.TimeIn;
-            //TimeSpan TimeOut = TimeEntry.TimeOut;
             var TimeEntries = new TimeEntry
             {
                 Day = DateTime.Today.DayOfWeek,
                 TimeIn = TimeIn,
                 Time_Out = TimeOut,
-                
             
             };
 
@@ -68,14 +65,9 @@ namespace Last_Try.Pages
             {
                 return Page();
             }
+   
 
-            
-            
-                
-              _context.TimeEntries.AddRange(TimeEntries);
-                
-
-                if (TimeEntry != null)
+            if (TimeEntry != null)
             {
                 var Date = TimeEntry.Date;
                 
@@ -93,6 +85,7 @@ namespace Last_Try.Pages
 
            
 
+            _context.TimeEntries.AddRange(TimeEntries);
 
             await _context.SaveChangesAsync();
 
