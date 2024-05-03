@@ -1,32 +1,68 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Last_Try.Models
 {
     public class TimeEntry
     {
-
-        public int? Id { get; set; }
-       // public DateTime? Date { get; set; }
-        public TimeSpan? Hours { get; set; }
+        [Key]
+        [Required]
+        public String Id { get; set; } = "Tony";
+     
         public bool Approved { get; set; }
         public string? UserId { get; set; }
 
-        public TimeSpan? TimeIn { get; set; } 
-        public TimeSpan? Time_Out { get; set; }
-        public DayOfWeek? Day { get; set; }
+        public String? TimeIn { get; set; } 
+        public String? Time_Out { get; set; }
+        public DateTime? Day { get; set; }
 
-        public TimeSpan? TimeWorked
-        { get
+
+        public string? Hours
+        {
+            get
             {
-                if (TimeIn != null && Time_Out != null)
-
+                if (!string.IsNullOrEmpty(TimeIn) && !string.IsNullOrEmpty(Time_Out))
                 {
-                    return (TimeSpan)(Time_Out.Value - TimeIn.Value);
+                    if (TimeSpan.TryParse(TimeIn, out TimeSpan timeIn) && TimeSpan.TryParse(Time_Out, out TimeSpan timeOut))
+                    {
+                        TimeSpan difference = timeOut - timeIn;
+
+                        return difference.ToString(@"hh\:mm");
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
+                {
                     return null;
+                }
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (TimeSpan.TryParse(value, out TimeSpan timeIn) && TimeSpan.TryParse(value, out TimeSpan timeOut))
+                    {
+                        TimeIn = timeIn.ToString();
+                        Time_Out = timeOut.ToString();
+                    }
+                    else
+                    {
+                        TimeIn = null;
+                        Time_Out = null;
+                    }
+                }
+                else
+                {
+                    TimeIn = null;
+                    Time_Out = null;
+                }
             }
         }
+
 
         //public IList<TimeEntry> TimeEntries { get; set; }
 

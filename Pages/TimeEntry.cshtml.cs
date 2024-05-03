@@ -7,30 +7,34 @@ using Last_Try.Controllers;
 using Last_Try;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Last_Try.Pages
 
 {
-    
 
-   
+
+
     public class TimeEntryModel(TimeDbContext context) : PageModel
     {
 
         public string UserId { get; set; } = "Tony";
         public List<DateTime> Date { get; set; } = new List<DateTime>();
- 
-       
-       public TimeEntryModel TimeEntry { get; set; }
 
+        public String Id { get; set; } = "Tony";
+       public TimeEntryModel? TimeEntry { get; set; }
 
+        
         [BindProperty]
 
         public TimeEntry[] TimeEntries { get; set; } = new TimeEntry[7];
-        public TimeSpan TimeOut { get; set; }
-        public TimeSpan TimeIn { get; set; }
+        public String? TimeOut { get; set; }
+        public String? TimeIn { get; set; }
 
         private readonly TimeDbContext _context = context;
+       // public DateTime date;
+
+
         public List<TimeEntry> GetTimeEntries()
         {
             return _context.TimeEntries.ToList();
@@ -41,7 +45,8 @@ namespace Last_Try.Pages
             Date = new List<DateTime>();
             DateTime today = DateTime.Today;
             DateTime dayOfWeek = today;
-            DateTime startOfWeek = dayOfWeek.Date;
+            DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek+1);
+
 
             for (int i = 0; i < 7; i++)
             {
@@ -51,15 +56,38 @@ namespace Last_Try.Pages
             
         }
 
-        public async Task<IActionResult> OnPostAsync(List<TimeEntry> times )
+
+
+        public async Task<IActionResult> OnPostAsync(List<TimeEntry> times)
         {
-            var TimeEntries = new TimeEntry
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            foreach (var time in times)
             {
-                Day = DateTime.Today.DayOfWeek,
-                TimeIn = TimeIn,
-                Time_Out = TimeOut,
-            
-            };
+                var existingEntry = _context.TimeEntries.Local.FirstOrDefault(e => e.Id == time.Id);
+                if (existingEntry != null)
+                {
+                    _context.Entry(existingEntry).CurrentValues.SetValues(time);
+                    _context.Entry(existingEntry).State = EntityState.Modified;
+                }
+                else
+                {
+                    _context.TimeEntries.Add(time);
+                }
+            }
+
+
+
+            foreach (var time in times)
+            {
+             
+                _context.TimeEntries.Add(time);
+            }
+
+           _context.TimeEntries.AddRange(TimeEntries);
+
+            await _context.SaveChangesAsync();
+
 
             if (!ModelState.IsValid)
             {
@@ -69,25 +97,18 @@ namespace Last_Try.Pages
 
             if (TimeEntry != null)
             {
-                var Date = TimeEntry.Date;
-                
+                        _ = TimeEntry.Date;
             }
 
             List<TimeEntry> timeEntries = GetTimeEntries();
 
-            foreach (var time in times)
-            {
-                _context.TimeEntries.Add(time);
-            }
 
-
+     
     
-
            
 
-            _context.TimeEntries.AddRange(TimeEntries);
+            // _context.TimeEntries.AddRange(times);
 
-            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Success");
 

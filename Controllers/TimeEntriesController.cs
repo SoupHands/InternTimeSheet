@@ -32,10 +32,7 @@ namespace Last_Try.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (var entry in model.TimeEntries)
-                {
-                    var TimeWorked = entry.Time_Out - entry.TimeIn;
-                }
+                
             return RedirectToAction("Dashboard");
             }
             return View("TimeEntry",model);
@@ -89,7 +86,7 @@ namespace Last_Try.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Hours,Approved")] TimeEntry timeEntry)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Date,Hours,Approved")] TimeEntry timeEntry)
         {
             if (id != timeEntry.Id)
             {
@@ -105,7 +102,7 @@ namespace Last_Try.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TimeEntryExists((int)timeEntry.Id))
+                    if (!TimeEntryExists(timeEntry.Id))
                     {
                         return NotFound();
                     }
@@ -118,7 +115,7 @@ namespace Last_Try.Controllers
             }
             return View(timeEntry);
         }
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -137,7 +134,7 @@ namespace Last_Try.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TimeEntryExists(int id)
+        private bool TimeEntryExists(String id)
         {
             return _context.TimeEntries.Any(e => e.Id == id);
         }

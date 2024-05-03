@@ -22,7 +22,7 @@ public class Startup(IConfiguration configuration)
         services.AddDbContext<TimeDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-        services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<TimeDbContext>();
 
         services.AddControllersWithViews();

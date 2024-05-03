@@ -21,8 +21,8 @@
             {
                 var date = Model.Date[i];
                 <div class="col-md-6 mb-3">
-                    <label for="timeEntries[@i].Date">@date.ToString("d")</label>
-                    <input type="hidden" asp-for="TimeEntries[@i].Date" name="times[@i].Date" value="@date" />
+                    <label for="timeEntries[@i].Date">@date.ToString("yyyy-MM-dd-ddd")</label>
+                    <input type="hidden" asp-for="TimeEntries[@i].Date" name="times[@i].Date" value="@date" id="TimeEntries[@i].Day" />
                     <div class="input-group">
                         <input asp-for="TimeEntries[@i].TimeIn" name="TimeEntries[@i].TimeIn" type="time" class="form-control" id="TimeEntries[@i].TimeIn">
                         <input asp-for="TimeEntries[@i].TimeOut" name="TimeEntries[@i].Time_Out" type="time" class="form-control" id="TimeEntries[@i].Time_Out">

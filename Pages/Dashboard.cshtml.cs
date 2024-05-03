@@ -44,7 +44,7 @@ namespace Last_Try
                 foreach (var days in DaysOfWeek)
                 {
                     var TimeEntryForDay = context.TimeEntries
-                        .Where(te => te.TimeIn.HasValue)
+                        .Where(te => te.TimeIn.Length>0)
                         .ToList();
                 }
             }
